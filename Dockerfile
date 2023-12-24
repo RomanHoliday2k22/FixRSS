@@ -4,6 +4,6 @@ RUN mvn clean package -DskipTests
 
 FROM openjdk:17.0.1-jdk-slim
 WORKDIR /app
-COPY --from=build /target/firstdockerapp-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /target/firstdockerapp-0.0.1-SNAPSHOT.jar demo.jar
 EXPOSE 8080
-ENTRYPOINT [ "java", "-jar", "app.jar" ]
+ENTRYPOINT [ "java", "-jar", "demo.jar" ]
