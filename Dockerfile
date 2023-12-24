@@ -6,6 +6,6 @@ RUN  ./mvnw package spring-boot:repackage --no-daemon
 
 FROM openjdk:17-jdk-slim
 EXPOSE 8080
-COPY --from=target/firstdockerapp-0.0.1-SNAPSHOT.jar /app.jar
+COPY --from=target/firstdockerapp-0.0.1-SNAPSHOT.jar /app/app.jar
 
 ENTRYPOINT ["java","-jar","app.jar"]
