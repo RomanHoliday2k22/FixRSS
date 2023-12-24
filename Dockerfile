@@ -1,14 +1,7 @@
-# Build stage
-FROM ubuntu:latest AS build
-RUN apt-get update
-RUN apt-get install openjdk-17-jdk -y
-WORKDIR /app
+FROM maven:3.8.5-openjdk-17 as build
 COPY . .
-RUN chmod +x mvnw  # Add this line to make the script executable
-RUN mvnw package spring-boot:repackage
+RUN mvn clean package -DskipTests
 
-# Final stage
-FROM openjdk:17-alpine
-EXPOSE 8080
+FROM openjdk:17.0.1-jdk-slim
 COPY --from=build /target/firstdockerapp-0.0.1-SNAPSHOT.jar app.jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT [ "java", "-jar", "app.jar" ]
