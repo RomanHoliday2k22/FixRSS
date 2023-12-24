@@ -2,10 +2,10 @@
 FROM ubuntu:latest AS build
 RUN apt-get update
 RUN apt-get install openjdk-17-jdk -y
-#WORKDIR /app
+WORKDIR /app
 COPY . .
 RUN chmod +x mvnw  # Add this line to make the script executable
-RUN ./mvnw package spring-boot:repackage
+RUN mvnw package spring-boot:repackage
 
 # Final stage
 FROM openjdk:17-alpine
