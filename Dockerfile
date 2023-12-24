@@ -4,6 +4,7 @@ RUN apt-get update
 RUN apt-get install openjdk-17-jdk -y
 WORKDIR /app
 COPY . .
+RUN chmod +x mvnw  # Add this line to make the script executable
 RUN ./mvnw package spring-boot:repackage
 
 # Final stage
