@@ -48,7 +48,7 @@ public class Hello {
 			List<SyndEntry> syndEntries = feed.getEntries();
 			
 			//Limiting number of article to 20
-			syndEntries=syndEntries.subList(0, Integer.min(syndEntries.size(),20));
+			//syndEntries=syndEntries.subList(0, Integer.min(syndEntries.size(),20));
 			
 			syndEntries=syndEntries.parallelStream().map(entry -> {
 
