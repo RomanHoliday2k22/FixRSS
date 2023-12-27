@@ -1,19 +1,13 @@
 package com.example.firstdockerapp.firstdockerapp;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rometools.modules.mediarss.MediaEntryModule;
@@ -29,15 +23,14 @@ import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.SyndFeedOutput;
 import com.rometools.rome.io.XmlReader;
 
+import keepinmemory.FeedUrlPersistInMemory;
+import tools.ImageTool;
+
 @RestController
-public class Hello {
+public class FixRssApi {
 
 	@RequestMapping(value="/fixrss",produces=MediaType.TEXT_XML_VALUE)
-	public String Hello(@RequestParam String url) {
-		
-		
-
-
+	public String FixRssApiHttpReuestHandler(@RequestParam String url) {
 		try {
 
 			SyndFeedInput input = new SyndFeedInput();
@@ -48,7 +41,7 @@ public class Hello {
 			List<SyndEntry> syndEntries = feed.getEntries();
 			
 			//Limiting number of article to 20
-			syndEntries=syndEntries.subList(0, Integer.min(syndEntries.size(),20));
+			//syndEntries=syndEntries.subList(0, Integer.min(syndEntries.size(),20));
 			
 			syndEntries=syndEntries.parallelStream().map(entry -> {
 
@@ -89,48 +82,35 @@ public class Hello {
 				
 				String imageUri;
 				try {
-					imageUri=this.getOgImageUrl(entry.getLink());
-					//System.out.println("No image found in rss feed. OG iamge fetched : "+imageUri);
+					imageUri=ImageTool.getOgImageUrl(entry.getLink());
 				} catch (Exception e) {
 					imageUri="https://static.toiimg.com/photo/msid-105938467,imgsize-113598.cms";
-					//System.out.println("No image found in rss feed, neither OG image was fetched");
 				}
 				enclosure.setUrl(imageUri);
 				entry.setEnclosures(Arrays.asList(enclosure));
 				return entry;
 			}).collect(Collectors.toList());
 			
+			
+			//If number of feed article above 1 then it will keep in memory
+			if(syndEntries.size()>1) {
+				FeedUrlPersistInMemory.updateRssFeedLink(url.trim());
+			}
+			
 			feed.setEntries(syndEntries);
 
 			SyndFeedOutput output = new SyndFeedOutput();
 
-			//response.setContentType("text/xml");
-			//response.setCharacterEncoding("utf-8");
-			//output.output(feed, response.getWriter());
 			String outputStr= output.outputString(feed);
-			//System.out.println(outputStr);
 			return outputStr;
 			
 		} catch (Exception e) {
 			return e.toString();
 		}
-
-	
-		
-		
-		
-		
 		
 		
 	}
 	
-	private String getOgImageUrl(String articleLink) throws IOException {
-	    Document doc = Jsoup.connect(articleLink).get();
-	    Elements metaOgImage = doc.select("meta[property=og:image]");
-	    if (metaOgImage != null && metaOgImage.size() > 0) {
-	      return metaOgImage.first().attr("content");
-	    }
-	    throw new IOException("No OG image found");
-	  }
+	
 
 }
