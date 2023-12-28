@@ -1,4 +1,4 @@
-name: HTTP GET trigger every 5 min for not letting server go into idle mode
+name: HTTP GET trigger every 5 min for not letting server go into idle mode 
 
 on:
   schedule:
