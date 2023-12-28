@@ -1,4 +1,4 @@
-package com.example.firstdockerapp.firstdockerapp;
+package business;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -39,6 +39,11 @@ public class FixRssApi {
 					.build(new XmlReader(new URL(url)));
 
 			List<SyndEntry> syndEntries = feed.getEntries();
+			
+			//If number of feed article above 1 then it will keep in memory
+			if(syndEntries.size()>1) {
+				FeedUrlPersistInMemory.updateRssFeedLink(url.trim());
+			}
 			
 			//Limiting number of article to 20
 			//syndEntries=syndEntries.subList(0, Integer.min(syndEntries.size(),20));
@@ -92,10 +97,7 @@ public class FixRssApi {
 			}).collect(Collectors.toList());
 			
 			
-			//If number of feed article above 1 then it will keep in memory
-			if(syndEntries.size()>1) {
-				FeedUrlPersistInMemory.updateRssFeedLink(url.trim());
-			}
+			
 			
 			feed.setEntries(syndEntries);
 

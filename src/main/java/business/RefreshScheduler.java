@@ -1,4 +1,4 @@
-package com.example.firstdockerapp.firstdockerapp;
+package business;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,8 +21,15 @@ import tools.ImageTool;
 @EnableScheduling
 public class RefreshScheduler {
 
-	@Scheduled(fixedDelay = 840000)
-	public void scheduleFixedDelayTask() {
+	//Every 60 seconds records will be saved in file
+	@Scheduled(fixedDelay = 60000)
+	public void persistAllToFile() {
+		FeedUrlPersistInMemory.persistAllToFile();
+	}
+	
+	//Every half an hour it will check for new articles
+	@Scheduled(fixedDelay = 1800000)
+	public void refreshRssFeeds() {
 		long startTime = System.currentTimeMillis();
 
 		try {

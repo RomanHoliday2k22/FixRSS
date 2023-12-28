@@ -1,9 +1,11 @@
 package keepinmemory;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class RssFeedRecord {
-	
+public class RssFeedRecord implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private String rssFeed;
 	private Date entryDt;
 	private Date lastUsedDt;

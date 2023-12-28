@@ -1,4 +1,4 @@
-package com.example.firstdockerapp.firstdockerapp;
+package business;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

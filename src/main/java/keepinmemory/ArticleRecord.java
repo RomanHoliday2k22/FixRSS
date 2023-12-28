@@ -1,8 +1,11 @@
 package keepinmemory;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ArticleRecord {
+public class ArticleRecord implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	private String articleLink;
 	private String ogImageLink;
 	private String articleHtml;
