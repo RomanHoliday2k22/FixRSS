@@ -10,4 +10,4 @@ jobs:
     steps:
       - name: HTTP GET Request
         run: |
-          curl https://www.example.com
+          curl https://fixrss.onrender.com/trigger
