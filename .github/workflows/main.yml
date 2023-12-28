@@ -10,4 +10,8 @@ jobs:
     steps:
       - name: HTTP GET Request
         run: |
+<<<<<<< HEAD
           curl https://fixrss.onrender.com/trigger
+=======
+          curl https://fixrss.onrender.com/trigger
+>>>>>>> branch 'main' of https://github.com/RomanHoliday2k22/FixRSS.git
