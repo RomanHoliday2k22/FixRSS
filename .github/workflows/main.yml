@@ -2,7 +2,7 @@ name: Trigger for stopping server to go into idle mode
 
 on:
   schedule:
-    - cron: '*/10 * * * * *'
+    - cron: '*/10 * * * *'
 
 jobs:
   http_request:
