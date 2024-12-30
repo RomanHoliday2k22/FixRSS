@@ -21,14 +21,14 @@ import tools.ImageTool;
 @EnableScheduling
 public class RefreshScheduler {
 
-	//Every 60 seconds records will be saved in file
-	@Scheduled(fixedDelay = 60000)
+	//Every 90 seconds records will be saved in file
+	@Scheduled(fixedDelay = 90000)
 	public void persistAllToFile() {
 		FeedUrlPersistInMemory.persistAllToFile();
 	}
 	
-	//Every half an hour it will check for new articles
-	@Scheduled(fixedDelay = 1800000)
+	//Every one hour it will check for new articles
+	@Scheduled(fixedDelay = 3600000)
 	public void refreshRssFeeds() {
 		long startTime = System.currentTimeMillis();
 
