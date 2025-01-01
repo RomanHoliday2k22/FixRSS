@@ -35,6 +35,7 @@ public class CleanHtml {
 	
 	@RequestMapping(value = "/clean1", produces = MediaType.TEXT_XML_VALUE)
 	public String FixRssApiHttpReuestHandler(@RequestParam String url) {
+		
 		try {
 
 			SyndFeedInput input = new SyndFeedInput();
